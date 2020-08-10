@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: shinyproxy
+  annotations:
+    kubernetes.io/ingress.class: traefik-public
+spec:
+  rules:
+    - host: "rshinyproxy.azureonaks.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: shinyproxy
+              servicePort: 8080

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shinyproxy
+  labels:
+    name: rshinyproxy
+    rshinyversion: 2.3.1
+spec:
+  type: ClusterIP
+  selector:
+    name: rshinyproxy
+    rshinyversion: 2.3.1
+  ports:
+    - port: 8080
+      targetPort: 8080

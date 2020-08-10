@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shiny
+data:
+  application.yml: |
+    proxy:
+      annotations: {}
+      authentication: none
+      container-backend: kubernetes
+      heartbeat-rate: 10000
+      heartbeat-timeout: 60000
+      image:
+        name:  ivmckinl/rshinyonk8s:2.3.1
+        tag: 2.3.1
+      kubernetes:
+        internal-networking: true
+      labels: {}
+      landing-page: /
+      logo-url: http://www.openanalytics.eu/sites/www.openanalytics.eu/themes/oa/logo.png
+      nodeSelector: {}
+      port: 8080
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+      service:
+        annotations: {}
+        loadBalancerIP: null
+        ports:
+          nodePort: null
+        type: ClusterIP
+      specs:
+      - container-cmd:
+        - R
+        - -e
+        - shinyproxy::run_01_hello()
+        container-image: openanalytics/shinyproxy-demo
+        description: Application which demonstrates the basics of a Shiny app
+        display-name: Hello Application
+        id: 01_hello
+      - container-cmd:
+        - R
+        - -e
+        - shinyproxy::run_06_tabsets()
+        container-image: openanalytics/shinyproxy-demo
+        id: 06_tabsets
+      title: Test

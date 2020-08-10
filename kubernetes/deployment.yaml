@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: rshinyproxy
+    rshinyversion: 2.3.1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      rshinyversion: 2.3.1
+      name: shinyproxy
+  template:
+    metadata:
+      labels:
+        rshinyversion: 2.3.1
+        name: shinyproxy
+    spec:
+      nodeSelector: {}
+      containers:
+        - name: shinyproxy
+          image: ivmckinl/rshinyonk8s:2.3.1
+          volumeMounts:
+          - name: config
+            mountPath: /opt/shinyproxy/application.yml
+            subPath: application.yml
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+      serviceAccountName: shiny
+      volumes:
+      - name: config
+        configMap:
+          name: shiny-config
