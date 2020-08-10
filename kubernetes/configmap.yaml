@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: shiny
+  name: shiny-config
 data:
   application.yml: |
     proxy:
@@ -44,5 +44,7 @@ data:
         - -e
         - shinyproxy::run_06_tabsets()
         container-image: openanalytics/shinyproxy-demo
+        description: Application which demonstrates tabsets
+        display-name: Tabset application
         id: 06_tabsets
       title: Test
