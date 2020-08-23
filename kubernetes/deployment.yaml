@@ -1,11 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: shinyproxy
+      
   labels:
-    name: rshinyproxy
+    name: shinyproxy
     rshinyversion: 2.3.1
 spec:
-  replicas: 1
+  replicas: 2 
   selector:
     matchLabels:
       rshinyversion: 2.3.1
@@ -28,7 +30,7 @@ spec:
             requests:
               cpu: 400m
               memory: 512Mi
-      serviceAccountName: shiny
+      serviceAccountName: shinyproxy
       volumes:
       - name: config
         configMap:

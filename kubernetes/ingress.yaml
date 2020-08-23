@@ -3,10 +3,13 @@ kind: Ingress
 metadata:
   name: shinyproxy
   annotations:
+    traefik.ingress.kubernetes.io/affinity: "true"
     kubernetes.io/ingress.class: traefik-public
+    traefik.frontend.rule.type: PathPrefixStrip
+    traefik.ingress.kubernetes.io/frontend-entry-points: http,https
 spec:
   rules:
-    - host: "rshinyproxy.azureonaks.com"
+    - host: "shinyproxy.aksonazure.com"
       http:
         paths:
           - path: /

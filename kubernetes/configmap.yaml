@@ -1,35 +1,35 @@
+## https://www.shinyproxy.io/configuration/#kubernetes
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: shiny-config
 data:
   application.yml: |
+    server:
+      servlet.session.timeout: 300
     proxy:
       annotations: {}
-      authentication: none
+      authentication: simple
+      admin-groups: scientists
+      users:
+      - name: jack
+        password: password
+        groups: scientists
+      - name: jeff
+        password: password
+        groups: mathematicians
       container-backend: kubernetes
       heartbeat-rate: 10000
       heartbeat-timeout: 60000
-      image:
-        name:  ivmckinl/rshinyonk8s:2.3.1
-        tag: 2.3.1
+      landing-page: /
       kubernetes:
         internal-networking: true
-      labels: {}
+        namespace: test
+        privileged: false
+        node-selector:
+            agentpools: basepool
       landing-page: /
-      logo-url: http://www.openanalytics.eu/sites/www.openanalytics.eu/themes/oa/logo.png
-      nodeSelector: {}
-      port: 8080
-      resources:
-        requests:
-          cpu: 200m
-          memory: 512Mi
-      service:
-        annotations: {}
-        loadBalancerIP: null
-        ports:
-          nodePort: null
-        type: ClusterIP
+      logo-url: https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg 
       specs:
       - container-cmd:
         - R
@@ -39,6 +39,12 @@ data:
         description: Application which demonstrates the basics of a Shiny app
         display-name: Hello Application
         id: 01_hello
+        container-memory-request: 256Mi
+        container-memory-limit: 512Mi
+        container-cpu-request: 400m
+        container-cpu-limit: 400m
+        container-privileged: false
+        logo-url:
       - container-cmd:
         - R
         - -e
@@ -47,4 +53,10 @@ data:
         description: Application which demonstrates tabsets
         display-name: Tabset application
         id: 06_tabsets
+        container-memory-request: 256Mi
+        container-memory-limit: 512Mi
+        container-cpu-request: 400m
+        container-cpu-limit: 400m
+        container-privileged: false
+        logo-url:
       title: Test

@@ -3,12 +3,17 @@ kind: Service
 metadata:
   name: shinyproxy
   labels:
-    name: rshinyproxy
+    name: shinyproxy
     rshinyversion: 2.3.1
+  annotations:
+    kubernetes.io/ingress.class: traefik-public
+    traefik.ingress.kubernetes.io/affinity: "true" # Back-end Cookie-based session
+    traefik.ingress.kubernetes.io/load-balancer-method: drr   #Modify load mode
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  sessionAffinity: ClientIP
   selector:
-    name: rshinyproxy
+    name: shinyproxy
     rshinyversion: 2.3.1
   ports:
     - port: 8080
